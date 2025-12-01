@@ -1,57 +1,39 @@
 open System.IO
 
-// Parse a single instruction like "L68" or "R48"
-let parseInstruction (s: string) =
-    let direction = s.[0]
-    let amount = int (s.Substring(1))
-    (direction, amount)
+let parseInstruction (s: string) = (s.[0], int s.[1..])
 
-// Count how many times the dial passes through 0 during a single turn
-// "Passing through 0" means the dial points at 0 at some point during the turn
-let countZeroCrossings (startPos: int) (direction: char) (amount: int) =
+let countZeroCrossings startPos dir amount =
     if amount = 0 then 0
     else
-        match direction with
-        | 'L' -> 
-            let firstZeroAt = if startPos = 0 then 100 else startPos
-            if firstZeroAt <= amount then
-                1 + (amount - firstZeroAt) / 100
-            else 0
-        | 'R' -> 
-            let firstZeroAt = if startPos = 0 then 100 else (100 - startPos)
-            if firstZeroAt <= amount then
-                1 + (amount - firstZeroAt) / 100
-            else 0
-        | _ -> 0
+        let firstZeroAt = 
+            match dir, startPos with
+            | _, 0 -> 100
+            | 'L', _ -> startPos
+            | 'R', _ -> 100 - startPos
+            | _ -> amount + 1
+        if firstZeroAt <= amount then 1 + (amount - firstZeroAt) / 100 else 0
 
-// Get the new position after a turn
-let turn (currentPos: int) (direction: char) (amount: int) =
-    match direction with
-    | 'L' -> (currentPos - amount % 100 + 100) % 100
-    | 'R' -> (currentPos + amount) % 100
-    | _ -> currentPos
+let turn pos dir amount =
+    match dir with
+    | 'L' -> (pos - amount % 100 + 100) % 100
+    | 'R' -> (pos + amount) % 100
+    | _ -> pos
 
-// Process all instructions, counting zero crossings
-let solve (startPos: int) (instructions: (char * int) list) =
-    instructions
-    |> List.fold (fun (pos, stopZero, zeroCount) (dir, amt) -> 
-        let crossings = countZeroCrossings pos dir amt
+let solve startPos instructions =
+    ((startPos, 0, 0), instructions)
+    ||> List.fold (fun (pos, stops, crossings) (dir, amt) ->
         let newPos = turn pos dir amt
-        let zeroStop = if newPos = 0 then stopZero + 1 else stopZero
-        (newPos, zeroStop, zeroCount + crossings)
-    ) (startPos, 0, 0)
+        (newPos, 
+         stops + (if newPos = 0 then 1 else 0), 
+         crossings + countZeroCrossings pos dir amt))
 
-// Main
 let input = 
     File.ReadAllLines("input/input01.txt")
-    |> Array.filter (fun s -> s.Length > 0)
+    |> Array.filter ((<>) "")
     |> Array.map parseInstruction
     |> Array.toList
 
-let startPosition = 50
-let (finalPos, stopZero, zeroCrossings) = solve startPosition input
+let (_, stopZero, zeroCrossings) = solve 50 input
 
-printfn "Starting position: %d" startPosition
-printfn "Final dial position: %d" finalPos
+printfn "Times stopped at 0: %d" stopZero
 printfn "Times dial pointed at 0: %d" zeroCrossings
-printfn "Times stopped at 0 during turns: %d" stopZero
