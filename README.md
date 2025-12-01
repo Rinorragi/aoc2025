@@ -1,4 +1,4 @@
-# Advent of Code 2024
+# Advent of Code 2025
 
 Repository to my puzzle solutions for [https://adventofcode.com/2025](https://adventofcode.com/2025).
 
