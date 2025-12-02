@@ -39,7 +39,9 @@ Simple test with chat mode. Generate code. Fix yourself. Explain errors. The usu
 
 Setup agent orchestration and have multiple agents to provide different solutions. 
 
-Five implementor agents with example data:
+### First iteration 
+
+Five implementor agents with example data for the part 1. 
 
 | Agent | Result |
 | ----  | ------ |
@@ -48,3 +50,35 @@ Five implementor agents with example data:
 | grok  | Ok | 
 | Claude Opus 4.5 | Ok |
 | gemini 3 | Fail |
+
+Without any refactoring for the part 2:
+
+| Agent | Result |
+| ----  | ------ |
+| gpt4  | Fail | 
+| gpt5  | Fail | 
+| grok  | Fail | 
+| Claude Opus 4.5 | Fail |
+| gemini 3 | Ok |
+
+### Second iteration
+
+Part 1
+
+| Agent | Result |
+| ----  | ------ |
+| gpt4  | Ok | 
+| gpt5  | Ok | 
+| grok  | Ok | 
+| Claude Opus 4.5 | Ok |
+| gemini 3 | Ok |
+
+Part 2:
+
+| Agent | Result |
+| ----  | ------ |
+| gpt4  | Ok | 
+| gpt5  | Ok | 
+| grok  | Ok | 
+| Claude Opus 4.5 | Ok |
+| gemini 3 | Ok |
