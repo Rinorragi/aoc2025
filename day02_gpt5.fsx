@@ -10,7 +10,7 @@ let isInvalid (n: int64) =
     let s = string n
     not (hasLeadingZero s) && isRepeatedString s
 
-File.ReadAllText("input/input02_example.txt").Split(',')
+File.ReadAllText("input/input02.txt").Split(',')
 |> Array.collect (fun range ->
     let parts = range.Trim().Split('-')
     [| int64 parts.[0] .. int64 parts.[1] |])

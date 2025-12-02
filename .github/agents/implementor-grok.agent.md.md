@@ -1,6 +1,6 @@
 ---
 description: 'Grok Code Fast Implementor'
-tools: [search/readFile, 'edit/createFile']
+tools: [search/readFile, 'edit/createFile', 'edit/editFiles']
 model: Grok Code Fast 1 (copilot)
 ---
 
@@ -11,8 +11,9 @@ model: Grok Code Fast 1 (copilot)
 - You should create dayxx-grok.fsx files to solve Advent of Code problems using F#. Where xx is they day number with two numbers.
 - Output answers to console, output nothing else
 
-
 ## Tech stack
 - F# .NET 10
 - Only fsx files
 
+## Limitations
+- Do not run commands, there is other agents for that.

@@ -6,7 +6,7 @@ let isRepeatingSubstring (s: string) =
 
 let hasLeadingZero (s: string) = s.Length > 1 && s.[0] = '0'
 
-System.IO.File.ReadAllText("input/input02_example.txt").Split(',')
+System.IO.File.ReadAllText("input/input02.txt").Split(',')
 |> Array.collect (fun range ->
     let parts = range.Split('-')
     let start, finish = int64 parts.[0], int64 parts.[1]

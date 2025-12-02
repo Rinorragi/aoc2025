@@ -1,6 +1,6 @@
 ---
 description: 'GPT5 Implementor'
-tools: [search/readFile, 'edit/createFile']
+tools: [search/readFile, 'edit/createFile', 'edit/editFiles']
 model: GPT-5.1 (Preview) (copilot)
 ---
 
@@ -15,3 +15,5 @@ model: GPT-5.1 (Preview) (copilot)
 - F# .NET 10
 - Only fsx files
 
+## Limitations
+- Do not run commands, there is other agents for that.

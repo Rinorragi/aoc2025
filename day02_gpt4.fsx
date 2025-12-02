@@ -14,7 +14,7 @@ let sumInvalidInRange (a, b) =
     |> Seq.filter isInvalid
     |> Seq.sum
 
-File.ReadAllText("input/input02_example.txt").Split(',')
+File.ReadAllText("input/input02.txt").Split(',')
 |> Array.map (fun s -> s.Trim())
 |> Array.map parseRange
 |> Array.map sumInvalidInRange

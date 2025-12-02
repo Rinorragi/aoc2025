@@ -9,7 +9,7 @@ let hasRepeatedSubstring (s: string) =
 let isValidId (s: string) =
     not (s.StartsWith("0")) && hasRepeatedSubstring s
 
-File.ReadAllText("input/input02_example.txt").Split(',')
+File.ReadAllText("input/input02.txt").Split(',')
 |> Seq.collect (fun range ->
     let parts = range.Split('-')
     let start, end' = int64 parts.[0], int64 parts.[1]
