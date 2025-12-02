@@ -485,3 +485,5 @@ $RECYCLE.BIN/
 
 # AoC specific files
 input/
+# AI generated execution scripts
+generated_scripts
