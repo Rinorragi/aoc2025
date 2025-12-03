@@ -91,4 +91,4 @@ GitHub CoPilot says that calling `subAgent` is blocking call. There seems to be 
 
 Also in addition implementor agents are hard-blocking each other by verificating their code by running terminal tool that was not allowed for them. Yesterdays learning is that the orchestrator `leaks all privileges to subagents` and that `there is no explicit way to limit subAgent rights` in this setup. You can just prompt more heavily in instructions and `hope that it does not ignore its instructions`. 
 
-TL;DR; AI took fun out of this and is being stupid illbehaving child. 
+TL;DR; AI took fun out of this and is being stupid ill behaving child. 
