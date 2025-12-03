@@ -82,3 +82,13 @@ Part 2:
 | grok  | Ok | 
 | Claude Opus 4.5 | Ok |
 | gemini 3 | Ok |
+
+## Day 3
+
+Actual code challenge was as anticlimax as I hoped with the setup. Copy-paste problem statement from AoC and say that it is day 3. Everything solved in few minutes. With every model. Liked maybe GPT 4 solution most. Learning came from AI. 
+
+GitHub CoPilot says that calling `subAgent` is blocking call. There seems to be at least [GitHub Issue open about that](https://github.com/microsoft/vscode/issues/274630). This means that I can't truly do this in parallel and have the models compete against each other which was disappointment.
+
+Also in addition implementor agents are hard-blocking each other by verificating their code by running terminal tool that was not allowed them. Yesterdays learning is that the orchestrator leaks all privileges to subagents and that there is no explicit way to limit subAgent rights in this setup. You can just prompt more heavily in instructions and hope that it does not ignore its instructions. 
+
+TL;DR; AI took fun out of this and is being stupid illbehaving child. 
