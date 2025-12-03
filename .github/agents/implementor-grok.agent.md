@@ -16,4 +16,6 @@ model: Grok Code Fast 1 (copilot)
 - Only fsx files
 
 ## Limitations
-- Do not run commands, there is other agents for that.
+- NEVER run terminal commands. You do not have terminal access.
+- NEVER verify your code by running it. Just create the file.
+- Return immediately after creating the file.
