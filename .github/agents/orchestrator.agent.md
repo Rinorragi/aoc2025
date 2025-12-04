@@ -23,9 +23,18 @@ model: Auto (copilot)
 - Delegate the batch script execution to Result Gatherer agent
 - This allows all F# scripts to run simultaneously instead of sequentially
 
+## Memory System
+- You MUST use custom memory system instead of built-in memory
+- You have terminal access and can run the memory script directly
+- Memory script: `memory/memory-manager.ps1`
+- Store: `.\memory\memory-manager.ps1 -Action store -Title "title" -Content "content"`
+- Search: `.\memory\memory-manager.ps1 -Action search -Query "keyword"`
+- Get: `.\memory\memory-manager.ps1 -Action get -Id "guid"`
+- List: `.\memory\memory-manager.ps1 -Action list`
+- Use memory to track project state, decisions, and important context across sessions
+
 ## Limitations
 - Do not use git commands
-- You have rights to run in terminal but that is to avoid bypass inherited limitations of coding agents. Let the subagents do their work instead of running commands yourself.'
+- You have rights to run in terminal ONLY for memory management. For other terminal operations, delegate to result-gatherer.
 - When you need to change files, always let the implementor agents to do it.
 - Do not ask implementor agents to run commands, there is result-gatherer for that
-- Do not run commands, there is result-gatherer for that

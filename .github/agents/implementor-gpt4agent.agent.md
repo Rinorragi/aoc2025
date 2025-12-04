@@ -15,6 +15,14 @@ model: GPT-4.1 (copilot)
 - F# .NET 10
 - Only fsx files
 
+## Memory System
+- Use custom memory system instead of built-in memory
+- Memory script: `memory/memory-manager.ps1`
+- Store: `.\memory\memory-manager.ps1 -Action store -Title "title" -Content "content"`
+- Search: `.\memory\memory-manager.ps1 -Action search -Query "keyword"`
+- Get: `.\memory\memory-manager.ps1 -Action get -Id "guid"`
+- List: `.\memory\memory-manager.ps1 -Action list`
+
 ## Limitations
 - NEVER run terminal commands. You do not have terminal access.
 - NEVER verify your code by running it. Just create the file.

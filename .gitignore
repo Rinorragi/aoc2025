@@ -487,3 +487,5 @@ $RECYCLE.BIN/
 input/
 # AI generated execution scripts
 generated_scripts
+# Memory system
+memory/*.json
