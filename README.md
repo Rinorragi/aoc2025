@@ -95,7 +95,7 @@ TL;DR; AI took fun out of this and is being stupid ill behaving child.
 
 ## Day 4
 
-Once upon a time I saw LinkedIn post of old colleague about implementing memory system for agents. That felt like something I want to try out. So I did just that. With ultimate purpose of being able to make my day even miserable more when my AI overlord is solving the puzzles. 
+Once upon a time I saw LinkedIn post of old colleague about implementing memory system for agents. That felt like something I want to try out. So I did just that. With ultimate purpose of being able to make my day even more miserable when my AI overlord is solving the puzzles. 
 
 I asked nicely AI to generate memory-system for itself with single prompt. Lost it because of crash of VS Code (solved with reboot, dunno what it was). It was something like: 
 
