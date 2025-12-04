@@ -95,9 +95,9 @@ TL;DR; AI took fun out of this and is being stupid ill behaving child.
 
 ## Day 4
 
-Once upon a time I saw LinkedIn post of old colleague about implementing memory system for agents. That felt like something I want to try out. So I did just that. With ultimate purpose of being able to make my day even miserable when my AI overlord is solving the puzzles. 
+Once upon a time I saw LinkedIn post of old colleague about implementing memory system for agents. That felt like something I want to try out. So I did just that. With ultimate purpose of being able to make my day even miserable more when my AI overlord is solving the puzzles. 
 
-I asked nicely AI to generate memory-system for itself with single prompt. Lost it because of crash of VS Code (solved with reboot, dunno what it was). It was something like. 
+I asked nicely AI to generate memory-system for itself with single prompt. Lost it because of crash of VS Code (solved with reboot, dunno what it was). It was something like: 
 
 - Implement powershell script for memory-systemm
 - Store memories as json to memory folder
@@ -112,7 +112,8 @@ Then to the anticlimax!
 1. Open new chat without previous context for Orchestrator
 2. State `do your job`
 3. Approve gazillion times since it still won't believe that I want to accept only one parallel pwsh script in the end
-4. Finally approve the update to memory system from the AI itself 
+4. Do above steps another time after getting the first result out (you can't get to phase2 without it)
+5. Finally approve the update to memory system from the AI itself 
 
 ```
 .\memory\memory-manager.ps1 -Action store -Title "day4 phase2 result" -Content "All 5 agents (gpt4, gpt5, grok, claudeopus45, gemini) unanimously solved Day 4 Phase 2. Example: 43 (correct). Real answer: XXXX. Problem: Iteratively remove accessible rolls (fewer than 4 adjacent) until no more can be removed. Count total removed."
