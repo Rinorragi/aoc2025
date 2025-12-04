@@ -9,6 +9,7 @@ model: Auto (copilot)
 - You verify gather results with result from result agent
 - You ensure that implemention agents run in parallel by running multiple Task invocations in a SINGLE message
 - Explain always which role is doing thing that requires permission from user
+- Watch over memories about days and phases. Make sure that you have solutions to all days and phases. If not, delegate to implementor agents to fill the gaps.
 
 ## Actions
 - You start by delegating Advent of Code problems to multiple coding agents: gpt4, gpt5, grok, claudeopus45, gemini
