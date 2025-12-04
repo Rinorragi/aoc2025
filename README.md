@@ -92,3 +92,30 @@ GitHub CoPilot says that calling `subAgent` is blocking call. There seems to be 
 Also in addition implementor agents are hard-blocking each other by verificating their code by running terminal tool that was not allowed for them. Yesterdays learning is that the orchestrator `leaks all privileges to subagents` and that `there is no explicit way to limit subAgent rights` in this setup. You can just prompt more heavily in instructions and `hope that it does not ignore its instructions`. 
 
 TL;DR; AI took fun out of this and is being stupid ill behaving child. 
+
+## Day 4
+
+Once upon a time I saw LinkedIn post of old colleague about implementing memory system for agents. That felt like something I want to try out. So I did just that. With ultimate purpose of being able to make my day even miserable when my AI overlord is solving the puzzles. 
+
+I asked nicely AI to generate memory-system for itself with single prompt. Lost it because of crash of VS Code (solved with reboot, dunno what it was). It was something like. 
+
+- Implement powershell script for memory-systemm
+- Store memories as json to memory folder
+- Update agent instruction to use only that memory system and not to use any other
+- json format is id, title, timestamp and content
+- Update gitignore to not include memories
+
+After that I simply asked AI to store Advent of Code memories each day as two separate phases e.g. ` "title": "day01 phase1",`. I updated the orchestrator instructions to ensure that we have solutions for all days and phases. 
+
+Then to the anticlimax! 
+
+1. Open new chat without previous context for Orchestrator
+2. State `do your job`
+3. Approve gazillion times since it still won't believe that I want to accept only one parallel pwsh script in the end
+4. Finally approve the update to memory system from the AI itself 
+
+```
+.\memory\memory-manager.ps1 -Action store -Title "day4 phase2 result" -Content "All 5 agents (gpt4, gpt5, grok, claudeopus45, gemini) unanimously solved Day 4 Phase 2. Example: 43 (correct). Real answer: XXXX. Problem: Iteratively remove accessible rolls (fewer than 4 adjacent) until no more can be removed. Count total removed."
+```
+
+About the quality it wen't pretty well. I was able to see some flaws in `grok` implementation but eventually it fixed itself. I have to say that this is like super depressing exercise as codewise. 

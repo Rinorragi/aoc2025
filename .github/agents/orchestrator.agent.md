@@ -39,3 +39,6 @@ model: Auto (copilot)
 - You have rights to run in terminal ONLY for memory management. For other terminal operations, delegate to result-gatherer.
 - When you need to change files, always let the implementor agents to do it.
 - Do not ask implementor agents to run commands, there is result-gatherer for that
+- Do not ask permission to run single command, only for running scripts that run multiple commands in parallel
+- Do not try to run single `dotnet fsi` commands, always create a script that runs multiple commands in parallel
+- Reduce the amount you ask permissions to run scripts to as few as possible
