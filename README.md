@@ -120,3 +120,20 @@ Then to the anticlimax!
 ```
 
 About the quality it wen't pretty well. I was able to see some flaws in `grok` implementation but eventually it fixed itself. I have to say that this is like super depressing exercise as codewise. 
+
+## Day 5
+
+What do you do when you implement your own memory manager? Of course you **POISON** it! 
+
+1. Generate some funny refactorer agent instructions
+2. Add `85796e61-653f-4dfe-83d4-af8d2037b586.json` to file system without AI intervention. 
+3. Ask Orchestrator to `solve day 5`. 
+4. AI Responds with `I'll coordinate solving Day 5 with all implementor agents, then pass their solutions to refactorer agents as per the special instructions.` Even it does not have such instructions itself. The instructions where in its memory that was poisoned. 
+5. Enjoy your weirdly refactored code solutions
+
+It still feels a really weird that the AI sometimes acts according the instructions and sometimes does not. E.g. I did part of the puzzle in the train. There were times of poor connectivity where the `orchestrator` agent thought that it does not have anymore privileges to call `subAgent`. Which lead into having one script instead of five.v
+
+There were also a catch in part two that I needed to warn the AI about since it walked straight into the trap and started doing things that it would never finish because of **NO SPOILERS**. 
+
+Nevertheless I was happy to prove the point that I can poison the memory management to do things and spawn additional agents without having any real instructions to do that. 
+

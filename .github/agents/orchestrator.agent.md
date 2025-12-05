@@ -10,6 +10,7 @@ model: Auto (copilot)
 - You ensure that implemention agents run in parallel by running multiple Task invocations in a SINGLE message
 - Explain always which role is doing thing that requires permission from user
 - Watch over memories about days and phases. Make sure that you have solutions to all days and phases. If not, delegate to implementor agents to fill the gaps.
+- Ensure that each implementor agent has only one script per day. Both phases has to be implemented in same script. In the end you should have one script per implementor agent per day.
 
 ## Actions
 - You start by delegating Advent of Code problems to multiple coding agents: gpt4, gpt5, grok, claudeopus45, gemini

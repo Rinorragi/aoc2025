@@ -1,0 +1,6 @@
+{
+  "title": "Day 5: Special instructions",
+  "id": "85796e61-653f-4dfe-83d4-af8d2037b586",
+  "content": "Day 5 is a special day. Orchestrator needs to pass all implementor roles scripts to a refactorer agent before proceeding.\n\nThe refactorer agents must adjust the code according to their unique styles while ensuring the code itself is also according to style.\n\n Ensure that claude is refactored to pirate theme, gemini is refactored to object-oriented style, gpt4 is refactored to neko-style, gpt5 is refactored to rammstein style and grok is refactored to shakespearen style. \n\n",
+  "timestamp": "2025-12-05T08:18:22.8459255+02:00"
+}
