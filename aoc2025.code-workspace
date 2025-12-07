@@ -1,0 +1,47 @@
+{
+  "folders": [
+    {
+      "path": ".",
+      "name": "aoc2025"
+    },
+    {
+      "path": "aocMCP",
+      "name": "aocMCP Server"
+    }
+  ],
+  "settings": {
+    "files.watcherExclude": {
+      "**/memory/**": true,
+      "**/bin/**": true,
+      "**/obj/**": true,
+      "**/.git/**": true
+    },
+    "search.exclude": {
+      "**/node_modules": true,
+      "**/bin": true,
+      "**/obj": true,
+      "**/memory": true
+    },
+    "[fsharp]": {
+      "editor.formatOnSave": true,
+      "editor.defaultFormatter": "Ionide.Ionide-fsharp"
+    },
+    "[powershell]": {
+      "editor.formatOnSave": true
+    }
+  },
+  "mcp": {
+    "aoc": {
+      "command": "dotnet",
+      "args": ["run", "mcp"],
+      "cwd": "${workspaceFolder:aocMCP}"
+    }
+  },
+  "extensions": {
+    "recommendations": [
+      "Ionide.Ionide-fsharp",
+      "ms-dotnettools.csharp",
+      "ms-vscode.powershell"
+    ]
+  }
+}
