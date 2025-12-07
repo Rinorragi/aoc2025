@@ -1,5 +1,12 @@
 {
   "files.watcherExclude": {
     "**/memory/**": true
+  },
+  "[mcp]": {
+    "aoc": {
+      "command": "dotnet",
+      "args": ["run", "mcp"],
+      "cwd": "${workspaceFolder}/aocMCP"
+    }
   }
 }

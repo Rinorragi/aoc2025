@@ -489,3 +489,8 @@ input/
 generated_scripts
 # Memory system
 memory/*.json
+# aocMCP server build artifacts
+aocMCP/bin/
+aocMCP/obj/
+# aocMCP instruction files (sensitive - stored in memory instead)
+aocMCP/instructions/
