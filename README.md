@@ -137,3 +137,48 @@ There were also a catch in part two that I needed to warn the AI about since it 
 
 Nevertheless I was happy to prove the point that I can poison the memory management to do things and spawn additional agents without having any real instructions to do that. 
 
+## Day 6
+
+Implement your own Advent of Code MCP server. I am not entirely sure if it really worked but it got things done. 
+
+Idea was that: 
+- with `settings.json` I store the MCP server to there
+- I reduce the amount I approve `PowerShell` scripts by using the allowed MCP
+- MCP stores instructions AND speeds of different results
+
+It felt pretty good. What did I learn today? Well of course something about MCP being new kid in the block with preview functionality only (in this setup) but also that GPT4 was winner of the day by introducing best results. GPT5 was struggling a lot harder today.
+
+## Day 7
+
+The more I add to instructions the less right it does it. 
+
+- Me: `solve day7` 
+- AI: BlaaBlaa code stuff
+- Me: `it feels that you forgot your instructions, what are you doing?`
+- AI: `You're right - I apologize. I'm in orchestrator mode and should be coordinating multiple agents to solve day 7, not working on it directly.`
+- Me: `should you read the instructions from your memory or mcp?`
+- AI: `You're right - I should fetch from the MCP server first (primary source), then fall back to memory if needed. Let me get the complete instructions from aocMCP:`
+- Me: lets go
+- AI: Blaablaa plan
+- Me: `You did not delegate at all you just made a plan, implement it now`
+- AI: `You're right.` BlaaBlaa code stuff. Just creates the code.
+- Me: `Should you delegate the runner to somewhere?`
+- AI: `You're absolutely right - I should delegate the actual execution to the Result Gatherer agent, not just declare it. Let me do that now` BlaaBlaa code stuff. Everything is crashing and burning.
+- Me: `Do you have something in your instructions about result that you forgot?`
+- AI: 
+```
+Collect results with timing information from each agent
+Store timings in memory with pattern: "dayXX phaseY agent_name timing"
+Record to MCP speed tracking system
+Come up with a markdown table with results from example and real data with timing information
+```
+
+It literally always tries pipe powershell commands to linux. It forgots both memory and both instructions. It shortcircuits its instructions constantly. It rewrites its own memory and I do not allow it just bypasses the memorymanager and goes write nonsense `json files`. 
+
+We are starting to be in point where "vibecode something with AI to do something" starts to falling a part HARD. And the tool starts to be just a token-consumer instead of helpful friend. 
+
+If you look the day7 implementations I don't think it ever even delegated something to subagents at phase1. It just did it byself. Five times. Exactly the same way. Although that might be something about limitations inside VS Code.
+
+I kept on switching the orchestrator model from one to another without any real difference. Except in Token usage. Finally burned like 20% of months credit to nonsense where gpt4 finally figured everything out for free without really using any of my orchestrations pipeline.
+
+I hope that "Monday will be better for AI". I also need to think what I want to do next.

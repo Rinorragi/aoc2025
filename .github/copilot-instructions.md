@@ -14,6 +14,8 @@
 - For file operations, prefer PowerShell cmdlets over shell syntax
 - Use semicolons `;` to chain commands in PowerShell, not `&&`
 - Use backticks for line continuation in PowerShell when needed
+- Don't use following linux commands: `cat`, `echo`, `grep`, `sed`, `awk`, `head`, `tail`, `find`, `xargs`, `chmod`, `chown`, `curl`, `wget`, `tar`, `zip`, `unzip`, `ls`, `cd`, `pwd`, `mv`, `cp`, `rm`, `len`, `test`, `date`, `time`, `which`, `man`, `top`, `ps`, `kill` instead use PowerShell equivalents
+
 
 # Communication
 
@@ -47,21 +49,3 @@ When scripts need AoC puzzle instructions, use this priority:
    - Store fetched instructions to MCP server
    - Ensures future runs use faster MCP source
    - Non-blocking operation
-
-## Implementation
-
-Scripts should use `#load "InstructionFetcher.fsx"` module:
-
-```fsharp
-#load "InstructionFetcher.fsx"
-open InstructionFetcher
-
-// Automatic three-tier fallback with MCP sync
-match fetchInstruction 6 with
-| Some result ->
-    printInfo result  // Shows content and source
-| None ->
-    printfn "Instructions not found after checking MCP and memory"
-```
-
-The fetcher automatically handles the entire chain and reports the source transparently.
