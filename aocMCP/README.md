@@ -4,7 +4,7 @@ A simple F# command-line MCP server for Advent of Code puzzle instructions and L
 
 ## Features
 
-- **Instruction Management**: Store and retrieve full Advent of Code puzzle instructions (both phases) as JSON
+- **Instruction Management**: Store and retrieve full Advent of Code puzzle instructions (both phases) as Markdown files or JSON
 - **Speed Tracking**: Record and aggregate LLM solving times per day and phase
 - **Simple CLI**: Easy-to-use command-line interface for listing, viewing, and recording data
 
@@ -14,7 +14,10 @@ A simple F# command-line MCP server for Advent of Code puzzle instructions and L
 aocMCP/
 ├── Program.fs              # Main F# implementation
 ├── aocMCP.fsproj           # Project file
-├── instructions/           # Puzzle instruction JSON files (dayXX.json)
+├── instructions/           # Puzzle instructions
+│   ├── Day01_phase1.md     # Phase 1 problem (Markdown format)
+│   ├── Day01_phase2.md     # Phase 2 problem (Markdown format)
+│   └── dayXX.json          # Legacy JSON format (optional)
 └── speeds/                 # Speed tracking JSON files (dayXX.json)
 ```
 
@@ -43,7 +46,27 @@ dotnet run speed 4 1 gpt4 1200
 
 ## Instruction File Format
 
-Instructions are stored as JSON with this format:
+Instructions can be stored in two formats:
+
+### Markdown Format (Recommended)
+Create two separate markdown files per day:
+- `Day01_phase1.md` - Phase 1 problem statement
+- `Day01_phase2.md` - Phase 2 problem statement
+
+This format is easier to share and edit:
+
+```markdown
+# Day 1 - Phase 1
+
+## Problem
+Parse a list of numbers and find the sum...
+
+## Example
+...
+```
+
+### JSON Format (Legacy)
+For backward compatibility, instructions can also be stored as JSON:
 
 ```json
 {
@@ -51,6 +74,16 @@ Instructions are stored as JSON with this format:
   "phase1": "Full problem statement for phase 1...",
   "phase2": "Full problem statement for phase 2 (optional)..."
 }
+```
+
+## File Structure
+
+```
+aocMCP/
+├── Program.fs              # Main F# implementation
+├── aocMCP.fsproj           # Project file
+├── instructions/           # Puzzle instructions (DayXX_phase1.md, DayXX_phase2.md, or dayXX.json)
+└── speeds/                 # Speed tracking JSON files (dayXX.json)
 ```
 
 ## Speed Tracking Format

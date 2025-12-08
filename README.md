@@ -182,3 +182,23 @@ If you look the day7 implementations I don't think it ever even delegated someth
 I kept on switching the orchestrator model from one to another without any real difference. Except in Token usage. Finally burned like 20% of months credit to nonsense where gpt4 finally figured everything out for free without really using any of my orchestrations pipeline.
 
 I hope that "Monday will be better for AI". I also need to think what I want to do next.
+
+## Day 8
+
+After last day it was clear that the Context had started to Collapse. It seemed that the instructions had become too complex and fragmented. Majority of which were suggestions from AI to solve problems that I had. AI suggested that instruction leakage was from the very same source. 
+
+A lot of effort was done to reduce the amount of instructions the agents has from different sources and to be more harsh about its instructions. No gentle tone anymore. My tone for AI instructions was too soft.
+
+Actual solution did not come that easily as it used to come, but at least I think I got my workflow fixed after changing the agent instructions and after changing the AoC MCP server implementation.
+
+Although the latest setup crealy struggles with implementation.
+
+| Agent           | Phase1 | Phase2 |
+| --------------  | ------ | ------ |
+| gpt4            | Fail   | Fail   | 
+| gpt5            | Fail   | Ok     | 
+| grok            | Ok     | Ok     |
+| Claude Opus 4.5 | Fail   | Ok     |
+| gemini 3        | Ok     | Ok     |
+
+

@@ -52,27 +52,68 @@ let ensureDirectories () =
 
 let loadInstruction (day: int) : Result<InstructionData, string> =
     try
-        let filePath = Path.Combine(instructionsDir, $"day{day:D2}.json")
-        if not (File.Exists filePath) then
-            Error $"Instruction file not found for day {day}"
+        // Try markdown files first (Day01_phase1.md, Day01_phase2.md)
+        let phase1File = Path.Combine(instructionsDir, $"Day{day:D2}_phase1.md")
+        let phase2File = Path.Combine(instructionsDir, $"Day{day:D2}_phase2.md")
+        
+        if File.Exists phase1File then
+            let phase1Content = File.ReadAllText phase1File
+            let phase2Content = 
+                if File.Exists phase2File then
+                    Some (File.ReadAllText phase2File)
+                else
+                    None
+            Ok { Day = day; Phase1 = phase1Content; Phase2 = phase2Content }
         else
-            let json = File.ReadAllText filePath
-            let data = JsonSerializer.Deserialize<InstructionData>(json, jsonOptions)
-            Ok data
+            // Fall back to JSON format for backward compatibility
+            let jsonFile = Path.Combine(instructionsDir, $"day{day:D2}.json")
+            if File.Exists jsonFile then
+                let json = File.ReadAllText jsonFile
+                let data = JsonSerializer.Deserialize<InstructionData>(json, jsonOptions)
+                Ok data
+            else
+                Error $"Instruction file not found for day {day} (tried Day{day:D2}_phase1.md and day{day:D2}.json)"
     with ex ->
         Error $"Error loading instruction: {ex.Message}"
 
 let getAvailableDays () : int list =
     try
-        Directory.GetFiles(instructionsDir, "day*.json")
-        |> Array.map (fun f -> 
-            let name = Path.GetFileNameWithoutExtension f
-            match name.Substring(3) with
-            | dayStr when Int32.TryParse(dayStr) |> fst -> Int32.Parse(dayStr)
-            | _ -> 0)
-        |> Array.filter (fun d -> d > 0)
-        |> Array.sortDescending
-        |> Array.toList
+        // Get days from markdown files (Day01_phase1.md pattern)
+        let mdFiles = Directory.GetFiles(instructionsDir, "Day*_phase1.md")
+        let mdDays = 
+            mdFiles
+            |> Array.map (fun f ->
+                let name = Path.GetFileNameWithoutExtension f
+                match name with
+                | n when n.StartsWith("Day") && n.EndsWith("_phase1") ->
+                    let dayStr = n.Substring(3, n.Length - 10)  // Remove "Day" prefix and "_phase1" suffix
+                    match Int32.TryParse(dayStr) with
+                    | true, day -> Some day
+                    | _ -> None
+                | _ -> None)
+            |> Array.choose id
+            |> Array.toList
+        
+        // Also get days from JSON files for backward compatibility
+        let jsonFiles = Directory.GetFiles(instructionsDir, "day*.json")
+        let jsonDays =
+            jsonFiles
+            |> Array.map (fun f ->
+                let name = Path.GetFileNameWithoutExtension f
+                match name with
+                | n when n.StartsWith("day") ->
+                    let dayStr = n.Substring(3)
+                    match Int32.TryParse(dayStr) with
+                    | true, day -> Some day
+                    | _ -> None
+                | _ -> None)
+            |> Array.choose id
+            |> Array.toList
+        
+        // Combine and remove duplicates, then sort
+        (mdDays @ jsonDays)
+        |> List.distinct
+        |> List.sortDescending
     with _ -> []
 
 let loadDaySpeed (day: int) : DaySpeedStats =
