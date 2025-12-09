@@ -1,6 +1,6 @@
 ---
 description: 'Result Gatherer'
-tools: ['runCommands/runInTerminal']
+tools: ['runCommands/runInTerminal', 'aocMCP/record_speed']
 model: GPT-5 mini (copilot)
 ---
 
@@ -10,16 +10,41 @@ Execute F# scripts and store results with timing to memory. When receiving imple
 
 ## Actions
 For each dayXX_[agent].fsx file:
-1. Run: `dotnet fsi dayXX_[agent].fsx`
-2. Capture output (Part 1, Part 2, Time)
-3. Store to memory: `.\memory\memory-manager.ps1 -Action store -Title "dayXX_[agent]" -Content "[captured output]"`
-4. Report: "✓ dayXX_[agent] completed in XXXms"
+1. Run example: `dotnet fsi dayXX_[agent].fsx` (uses example input)
+2. Run real: `dotnet fsi dayXX_[agent].fsx` (uses real input)
+3. Capture both outputs (Phase 1, Phase 2, Time for each)
+4. Store to memory: `.\memory\memory-manager.ps1 -Action store -Title "dayXX_[agent]" -Content "[captured output including both example and real results]"`
+5. Report results in markdown table format:
 
-## MCP Server Storage
-When you receive implementor speed results, store them to the MCP server using the provided MCP API or script.
-Example (PowerShell):
-`.aocMCP\speeds\store-speed.ps1 -Agent [agent] -Day XX -Speed [ms]`
-Ensure the speed is saved in the correct format/location as required by the MCP server.
+| Agent | P1 Example | P1 Real | P1 Time (ms) | P2 Example | P2 Real | P2 Time (ms) |
+|-------|------------|---------|--------------|------------|---------|--------------|
+| agent1| result     | result  | time         | result     | result  | time         |
+| agent2| result     | result  | time         | result     | result  | time         |
+
+## MCP Server for Speed Recording
+
+**Server Name:** `aocMCP` (configured in workspace settings under `mcp` section)
+**Tool Naming:** In VS Code, MCP tools are accessed as `<servername>/<toolname>`
+**Tool Name:** `aocMCP/record_speed`
+
+**Parameters:**
+- `day`: Day number (1-25)
+- `phase`: Phase number (1 or 2)
+- `llm_name`: LLM identifier - use EXACTLY these values:
+  - `"gpt-4"` for gpt4agent
+  - `"gpt-5"` for gpt5agent
+  - `"gemini"` for gemini
+  - `"grok"` for grok
+  - `"claude-opus-4.5"` for claudeopus45
+- `speed_ms`: Execution time in milliseconds (integer)
+
+**Usage Example:**
+To record GPT-4's Day 8 Phase 1 execution time of 1250ms, use tool `aocMCP/record_speed` with:
+```json
+{"day": 8, "phase": 1, "llm_name": "gpt-4", "speed_ms": 1250}
+```
+
+Record speeds for BOTH Phase 1 and Phase 2 separately for each implementor.
 
 ## Memory Storage Format
 - Title: `"dayXX_[agent]"` (e.g., "day08_gpt4")

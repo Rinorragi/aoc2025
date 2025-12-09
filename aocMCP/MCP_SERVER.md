@@ -4,10 +4,10 @@ A local Model Context Protocol (MCP) server for managing Advent of Code 2025 puz
 
 ## Running the Server
 
-Start the MCP server on stdio:
+Start the MCP server (runs on stdio by default):
 
 ```bash
-dotnet run mcp
+dotnet run
 ```
 
 The server will listen for JSON-RPC 2.0 messages on stdin and write responses to stdout.
@@ -93,21 +93,7 @@ Record the solving time for an LLM on a specific day and phase.
 {"jsonrpc":"2.0","id":5,"result":{"content":[{"type":"text","text":"Recorded gpt-4 Day 1 Phase 1: 1250ms (avg: 1250ms)"}]}}
 ```
 
-## CLI Commands
 
-```bash
-# List available instruction days
-dotnet run list
-
-# Show instructions for a specific day
-dotnet run show 1
-
-# Record solving speed for an LLM
-dotnet run speed 1 1 gpt-4 1250
-
-# Start MCP server on stdio
-dotnet run mcp
-```
 
 ## Data Storage
 
@@ -128,7 +114,7 @@ To use with Claude Desktop, add this to `claude_desktop_config.json`:
   "mcpServers": {
     "aoc": {
       "command": "dotnet",
-      "args": ["run", "mcp"],
+      "args": ["run"],
       "cwd": "/path/to/aoc2025/aocMCP"
     }
   }

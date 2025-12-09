@@ -494,3 +494,4 @@ aocMCP/bin/
 aocMCP/obj/
 # aocMCP instruction files (sensitive - stored in memory instead)
 aocMCP/instructions/
+docs/

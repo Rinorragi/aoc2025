@@ -153,31 +153,7 @@ let recordSpeed (day: int) (phase: int) (llm: string) (speedMs: int64) : Result<
     with ex ->
         Error $"Error recording speed: {ex.Message}"
 
-let listAvailableInstructions () : unit =
-    let days = getAvailableDays()
-    if days.IsEmpty then
-        printfn "No instruction files found in %s" instructionsDir
-    else
-        printfn "Available Advent of Code days:"
-        days |> List.iter (fun day -> printfn "  Day %d" day)
 
-let showDay (day: int) : unit =
-    match loadInstruction day with
-    | Ok instr ->
-        printfn "=== Day %d ===" day
-        printfn "\n[Phase 1]\n%s" instr.Phase1
-        (match instr.Phase2 with
-         | Some p2 -> printfn "\n[Phase 2]\n%s" p2
-         | None -> ())
-    | Error e -> printfn "Error: %s" e
-
-let recordSpeedCli (day: int) (phase: int) (llm: string) (speed: int64) : unit =
-    match recordSpeed day phase llm speed with
-    | Ok stats ->
-        let llmEntries = stats.Entries |> List.filter (fun e -> e.LLM = llm)
-        let avg = if llmEntries.IsEmpty then 0L else llmEntries |> List.map (fun e -> e.SpeedMs) |> List.averageBy float |> int64
-        printfn "Recorded %s Day %d Phase %d: %dms (avg: %dms)" llm day phase speed avg
-    | Error e -> printfn "Error: %s" e
 
 let runMcpServer () : unit = 
     let stdin = Console.In
@@ -205,6 +181,9 @@ let runMcpServer () : unit =
                         
                         let response = 
                             match method_ with
+                            | "initialize" ->
+                                sprintf """{"jsonrpc":"2.0","id":%d,"result":{"protocolVersion":"2024-11-05","capabilities":{"resources":{"subscribe":false,"listChanged":false},"tools":{},"prompts":{}},"serverInfo":{"name":"aocMCP","version":"1.0.0"}}}""" id
+                            
                             | "resources/list" ->
                                 let days = getAvailableDays()
                                 let resourceList =
@@ -226,7 +205,9 @@ let runMcpServer () : unit =
                                                 match instr.Phase2 with
                                                 | Some p2 -> $"# Day {day}\n\n## Phase 1\n{instr.Phase1}\n\n## Phase 2\n{p2}"
                                                 | None -> $"# Day {day}\n\n{instr.Phase1}"
-                                            let escaped = JsonSerializer.Serialize(content)
+                                            // Normalize line endings to Unix format before serializing
+                                            let normalizedContent = content.Replace("\r\n", "\n").Replace("\r", "\n")
+                                            let escaped = JsonSerializer.Serialize(normalizedContent)
                                             sprintf """{"jsonrpc":"2.0","id":%d,"result":{"contents":[{"uri":"aoc://day%02d","mimeType":"text/plain","text":%s}]}}""" id day escaped
                                         | Error e ->
                                             sprintf """{"jsonrpc":"2.0","id":%d,"error":{"code":-1,"message":"Error loading instruction: %s"}}""" id e
@@ -234,6 +215,9 @@ let runMcpServer () : unit =
                                         sprintf """{"jsonrpc":"2.0","id":%d,"error":{"code":-1,"message":"Invalid day format"}}""" id
                                 else
                                     sprintf """{"jsonrpc":"2.0","id":%d,"error":{"code":-32602,"message":"Missing params"}}""" id
+                            
+                            | "prompts/list" ->
+                                sprintf """{"jsonrpc":"2.0","id":%d,"result":{"prompts":[]}}""" id
                             
                             | "tools/list" ->
                                 sprintf """{"jsonrpc":"2.0","id":%d,"result":{"tools":[{"name":"fetch_instruction","description":"Fetch the full puzzle instruction for a specific day","inputSchema":{"type":"object","properties":{"day":{"type":"integer","description":"Day number (1-25)"}},"required":["day"]}},{"name":"record_speed","description":"Record the solving speed for an LLM on a specific day and phase","inputSchema":{"type":"object","properties":{"day":{"type":"integer","description":"Day number"},"phase":{"type":"integer","description":"Phase (1 or 2)"},"llm_name":{"type":"string","description":"LLM name"},"speed_ms":{"type":"integer","description":"Solving time in milliseconds"}},"required":["day","phase","llm_name","speed_ms"]}}]}}""" id
@@ -249,7 +233,7 @@ let runMcpServer () : unit =
                                             (match loadInstruction day with
                                              | Ok instr ->
                                                  let content = match instr.Phase2 with Some p2 -> $"# Day {day}\n\n## Phase 1\n{instr.Phase1}\n\n## Phase 2\n{p2}" | None -> $"# Day {day}\n\n{instr.Phase1}"
-                                                 sprintf """{"jsonrpc":"2.0","id":%d,"result":{"content":[{"type":"text","text":"%s"}]}}""" id (content.Replace("\"", "\\\"").Replace("\n", "\\n"))
+                                                 sprintf """{"jsonrpc":"2.0","id":%d,"result":{"content":[{"type":"text","text":"%s"}]}}""" id (content.Replace("\r\n", "\n").Replace("\r", "\n").Replace("\"", "\\\"").Replace("\n", "\\n"))
                                              | Error e ->
                                                  sprintf """{"jsonrpc":"2.0","id":%d,"error":{"code":-1,"message":"%s"}}""" id e)
                                         | "record_speed" ->
@@ -272,8 +256,9 @@ let runMcpServer () : unit =
                                 else
                                     sprintf """{"jsonrpc":"2.0","id":%d,"error":{"code":-32602,"message":"Missing params"}}""" id
                             
-                            | _ ->
-                                sprintf """{"jsonrpc":"2.0","id":%d,"error":{"code":-32601,"message":"Method not found"}}""" id
+                            | unknownMethod ->
+                                eprintfn $"[ERROR] Method not found: {unknownMethod}"
+                                sprintf """{"jsonrpc":"2.0","id":%d,"error":{"code":-32601,"message":"Method not found: %s"}}""" id unknownMethod
                         
                         stdout.WriteLine(response)
                         stdout.Flush()
@@ -290,24 +275,5 @@ let runMcpServer () : unit =
 [<EntryPoint>]
 let main args =
     ensureDirectories()
-    
-    match args with
-    | [| "mcp" |] -> 
-        runMcpServer()
-        0
-    | [| |] | [| "list" |] -> listAvailableInstructions(); 0
-    | [| "show"; dayStr |] when Int32.TryParse(dayStr) |> fst -> showDay (Int32.Parse(dayStr)); 0
-    | [| "speed"; dayStr; phaseStr; llm; speedStr |] when Int32.TryParse(dayStr) |> fst && Int32.TryParse(phaseStr) |> fst && Int64.TryParse(speedStr) |> fst ->
-        recordSpeedCli (Int32.Parse(dayStr)) (Int32.Parse(phaseStr)) llm (Int64.Parse(speedStr)); 0
-    | _ ->
-        printfn "AoC MCP Server - Advent of Code Instruction & Speed Tracker"
-        printfn ""
-        printfn "Usage:"
-        printfn "  aocMCP [list]                                    - List available instruction days"
-        printfn "  aocMCP show <day>                                - Show instructions for a day"
-        printfn "  aocMCP speed <day> <phase> <llm> <speed_ms>    - Record solving speed"
-        printfn "  aocMCP mcp                                       - Start MCP server on stdio"
-        printfn ""
-        printfn "Instructions are stored in: %s" instructionsDir
-        printfn "Speed records are stored in: %s" speedsDir
-        0
+    runMcpServer()
+    0
