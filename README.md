@@ -202,3 +202,46 @@ Although the latest setup crealy struggles with implementation.
 | gemini 3        | Ok     | Ok     |
 
 
+## Day 9
+
+I finally figured out how the MCP server works. And fixed it!
+
+ 1. First of all I went back and forth with instruction and finally made them simpler
+ 2. I removed the CLI support from MCP server to ensure that `STDIO` is being used to call it
+ 3. I removed workspace configurations and configured it to `mcp.json` like this:
+```json
+{
+    "servers": {
+        "aocMCP": {
+            "type": "stdio",
+            "command": "dotnet",
+            "args": [
+                "run",
+                "--project",
+                "${workspaceFolder}/aocMCP/aocMCP.fsproj"
+            ]
+        }
+    }
+}
+```
+4. I pushed restart multiple times from the `mcp.json` to catch all errors with "homemade" json-rpc. The MCP server required multiple new commands to endure restart from VS Code like
+   - `Initialize` 
+   - `prompts/list`
+   - Implemented error handling to tell what VS Code tried to do when calling the server to catch the missing commands
+   - I also needed to get rid of Windows style line-endings to make it work in he json documents. 
+5. (Commit with MCP things and planner simplifications)[https://github.com/Rinorragi/aoc2025/commit/1d8f7b1e34a43c53626e20127fca3ba409c2dc42]
+
+Finally with that all done I got into puzzle. Phase1 was pretty straightforward and the instructions worked pretty well. With Phase2 I got back into the thing why I have liked Advent of Code so much. Tried to insist that LLM should use this and that algorithm to figure out the phase2 where none really worked. 
+
+Final solution took time and way more tokens that I would have wanted. Also my orchestrator again learned my desperation and wanted to help and not to delegate anything to anyone at the end. With fresh context window it seems to work pretty well now. The flow is something like.
+
+1. Orchestrator fetches instructions for the day
+2. Orchestrator pushes context to Planner who plans the solution for the day
+    - Was useful for debugging to have plan as markdown (gitignore because no spoilers)
+    - Also teached me when agents did disagree with me and insisted on bruteforce instead of algorithms
+3. Orchestrator then delegates sequentally (blaah, this battle was lost) to each implementor agent to code according to plan
+4. Finally result-gatherer is called to run all the solutions parallel to have "speed competition" between models. 
+    - In normal day phase1 is no interest because it is so fast
+    - In phase2 the orchestrator has lost hope to its siblings and started to act against its instructions about delegation
+
+Nevertheless. Teached me a lot. And also consumed pretty much rest of my tokens for this month. We will see what happens tomorrow - if anything. 
