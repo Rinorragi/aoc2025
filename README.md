@@ -245,3 +245,36 @@ Final solution took time and way more tokens that I would have wanted. Also my o
     - In phase2 the orchestrator has lost hope to its siblings and started to act against its instructions about delegation
 
 Nevertheless. Teached me a lot. And also consumed pretty much rest of my tokens for this month. We will see what happens tomorrow - if anything. 
+
+## Day 10
+
+Spec-kit learning day. I learned that I needed to hammer my head to the wall to understand the benefit of using spec-driven AI development now. The context and the specification of different agents hold much better than with my homemade memorysystem, mcpmadness and vibecrafted workflow. I was on the right track but when I took spec-kit and continued on top of that it was interesting. 
+
+Key learnings:
+
+- Oh boy how well the `analyze` agent did analysis on performance issues. Much better than I anticipiated. 
+- Speckit is meant for greenfield. Duct-taping it into my existing setup was ... interesting. But not undoable!
+- The flow hold so well together that I did zero chat context resets whole day. 
+- Still I had a lot of back-and-forth type of things with the agents when trying to solve phase2 correct algorhitm and bottlenecks. 
+
+Installation: 
+
+1. Install uv with `winget install --id=astral-sh.uv -e`
+2. Install spec-kit with `uv tool install specify-cli --from git+https://github.com/github/spec-kit.git`
+3. `uv tool update-shell` to add installed tool to path
+4. Restart IDE and other terminals to get tools available
+5. Initialize specKit with `specify init aocSPEC`
+6. See that it created agents, memories and scripts that we have been vibecoding before
+7. Open `code` win aocSPEC subfolder (didn't dare to throw it into this messy context)
+
+Using speckit: 
+
+1. Use prompt `speckit.constitution fill with bare minimum F# fsx scripts` or similar
+2. Then I prompted to `speckit.specify` to fill templates for days
+3. Added aocMCP to also this subfolder
+4. `speckit.plan fetch day 10 from mcp and create a plan how to solve it with the template"
+5. Some disagreement with folder structures (tried to put them in one folder above because I instructed to fetch input from there)
+6. `speckit.tasks to break into tasks`
+7. `speckit.implement`
+8. Eventually the flow was something like that it manipulated day10 on its own space, then replaced the one at repository root and run from there
+

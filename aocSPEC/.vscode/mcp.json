@@ -1,0 +1,13 @@
+{
+    "servers": {
+        "aocMCP": {
+            "type": "stdio",
+            "command": "dotnet",
+            "args": [
+                "run",
+                "--project",
+                "${workspaceFolder}/../aocMCP/aocMCP.fsproj"
+            ]
+        }
+    }
+}
