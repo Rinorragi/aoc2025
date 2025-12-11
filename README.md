@@ -248,7 +248,7 @@ Nevertheless. Teached me a lot. And also consumed pretty much rest of my tokens 
 
 ## Day 10
 
-Spec-kit learning day. I learned that I needed to hammer my head to the wall to understand the benefit of using spec-driven AI development now. The context and the specification of different agents hold much better than with my homemade memorysystem, mcpmadness and vibecrafted workflow. I was on the right track but when I took spec-kit and continued on top of that it was interesting. 
+[Spec-kit learning day](https://github.com/github/spec-kit). I learned that I needed to hammer my head to the wall to understand the benefit of using spec-driven AI development now. The context and the specification of different agents hold much better than with my homemade memorysystem, mcpmadness and vibecrafted workflow. I was on the right track but when I took spec-kit and continued on top of that it was interesting. 
 
 Key learnings:
 
@@ -278,3 +278,37 @@ Using speckit:
 7. `speckit.implement`
 8. Eventually the flow was something like that it manipulated day10 on its own space, then replaced the one at repository root and run from there
 
+## Day 11
+
+[OpenSpec day](https://github.com/Fission-AI/OpenSpec). Where yesterdays `SpecKit` was maybe a bit more to greenfield the `OpenSpec` is more towards brownfield projects. Personally I could felt that the init process actually tried to hook up my current setup better than the purposefully separated speckit yesterday. Despite that I felt that the flow with `SpecKit` was more mature and it speaked to my language more than the openspec. One major flaw was that I did not feel the `OpenSpec` would have documented in spec and plan all the quirks as well as `SpecKit` did. 
+
+Installing `OpenSpec`
+
+1. Install `node` to get `npm`
+2. Install OpenSpec with `npm install -g @fission-ai/openspec@latest`
+3. In your repo folder `openspec init`
+  - Follow the additional questions and instructions
+  - Prompt: "Please read openspec/project.md and help me fill it out with details about my project, tech stack, and conventions"
+
+Using `OpenSpec` to solve day11: 
+
+0. Add markdown to mcpServer for this days puzzle, add inputs to input folders
+1. Prompt: `I want to solve day11. Please create an OpenSpec change proposal for this feature`
+2. Prompt: `implement day 11 according to proposal`
+3. Same `analyze` and `try again` madness like with other tools
+4. Prompt: `archive` when done
+
+What it did right was:
+
+- It used my MCP to solve the puzzle
+- It hooked into existing "make AI models to compete against each other" setup
+- It stored speeds of phase1 to both this document (removed manually) and to memorymanager
+
+When updating plan and implementation in phase2: 
+
+- It did not run all phases parallel and gather results anymore
+- It did not store speeds nor update this document
+- It lost in `spec` and `design` a lot of information that it provided in the chat context
+- Although the actual [OpenSpec design](/openspec/changes/archive/2025-12-11-solve-day11/design.md) document is worth reading nevertheless, but I think that it still lacks the latest details
+
+Verdict: Liked the `Spec-Kit` more than `OpenSpec` even in this kind of brownfield system. Might be something to consider to make a vanilla environment with both and feed all the inputs and puzzles to each and see what happens. 
