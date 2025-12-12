@@ -280,7 +280,7 @@ Using speckit:
 
 ## Day 11
 
-[OpenSpec day](https://github.com/Fission-AI/OpenSpec). Where yesterdays `SpecKit` was maybe a bit more to greenfield the `OpenSpec` is more towards brownfield projects. Personally I could felt that the init process actually tried to hook up my current setup better than the purposefully separated speckit yesterday. Despite that I felt that the flow with `SpecKit` was more mature and it speaked to my language more than the openspec. One major flaw was that I did not feel the `OpenSpec` would have documented in spec and plan all the quirks as well as `SpecKit` did. 
+[OpenSpec day](https://github.com/Fission-AI/OpenSpec). Where yesterdays `Spec-Kit` was maybe a bit more to greenfield the `OpenSpec` is more towards brownfield projects. Personally I could felt that the init process actually tried to hook up my current setup better than the purposefully separated speckit yesterday. Despite that I felt that the flow with `Spec-Kit` was more mature and it speaked to my language more than the openspec. One major flaw was that I did not feel the `OpenSpec` would have documented in spec and plan all the quirks as well as `Spec-Kit` did. 
 
 Installing `OpenSpec`
 
@@ -312,3 +312,125 @@ When updating plan and implementation in phase2:
 - Although the actual [OpenSpec design](/openspec/changes/archive/2025-12-11-solve-day11/design.md) document is worth reading nevertheless, but I think that it still lacks the latest details
 
 Verdict: Liked the `Spec-Kit` more than `OpenSpec` even in this kind of brownfield system. Might be something to consider to make a vanilla environment with both and feed all the inputs and puzzles to each and see what happens. 
+
+## Day 12
+
+I must be mad to use [BMAD](https://github.com/bmad-code-org/BMAD-METHOD) for the last day of Advent of Code. Where `OpenSpec` was more lightweight than `Spec-Kit` the `BMAD` was told to be **THE ENTERPRISE OPTION**. With this I can simulate both `Agile Framework` and `whole team` with roles like `architect`, `pm`, `sm`, `ux-designer`, `developer` and so forth. 
+
+Installation
+- `npx bmad-method@alpha install`
+- Answer bunch of questions about your project to help it setup the needed thingsies
+- Enjoy ~300 new files in the repository (git diff --cached --shortat)
+- Open `bmd-custom-bmm-analyst` in agent chat and say `workflow-init` continue from there in a `text adventure`
+
+Usage
+- I chose from the text adventure `option 6 - Document your existing project` (recommended for brown field) and I immediately regret having chosen `Pirate English` as a language
+- It gives me options to either document by
+    - Quick scan 2-5 minutes
+    - Deep Scan 10-30 minutes
+    - Exhaustive scan 30-120 minutes 
+- I chose Deep Scan and it took few minutes
+
+Day12:
+- Prompt `Day 12 is here and we need to solve it. Ensure that architect does his job and ux designer designs beautiful commandline interface for solving the day 12 puzzle, ensure that developers have specs to work on. `
+- It tried to read 2024 day 12 from the internet. I corrected and said use the mcp server configured. Whic it did not and instead read the markdown file directly. Oh well...
+    - It stored a 300 under `docs` instead of configured `aocBMDdocs` which needed to moved
+- The original plan did not look sound so I asked from `architect`
+    - Prompt: `check from the input folder the day12 inputs and ensure that the algorhitm strategy is feasible`
+    - 
+       ```markdown
+        ⚠️ CRITICAL ISSUE DETECTED!
+
+        The real input is MUCH LARGER than expected:
+
+        1030 lines total
+        6 shapes (same as example)
+        ~70 regions to test (vs 3 in example)
+        Regions up to 50×50 (2,500 cells)
+        Up to 72 presents per region
+        The backtracking algorithm as specified will be TOO SLOW.
+        ```
+- Not sure what `UX designer` does in console apps, so I asked from `ux designer` about the design. Some highlights
+    - Prompt: `explain the fine console ux for the solution `
+    - 
+        ```markdown
+        Design Principles:
+            🎄 Christmas charm - Emojis keep it festive
+            📊 Information density - Show progress without overwhelming
+            ⚡ Performance transparency - Timing shows algorithm efficiency
+            ✓/✗ Instant feedback - Color-coded success/failure
+            📦 Clean separation - Box-drawing chars organize sections
+        
+        Christmas-themed emojis with box-drawing characters for visual impact:
+            🎄 Advent of Code 2025 - Day 12: Present Packing 🎁
+
+        Each region gets:
+            Visual separator (dashed line)
+            Region info (dimensions + present count)
+            Requirements breakdown (which shapes needed)
+            Result indicator: ✓ SOLVABLE (green) or ✗ UNSOLVABLE (red)
+            Timing (performance transparency)
+
+        The UX balances aesthetics (it's Christmas!), clarity (you know what's happening), and performance insight (see which regions are slow).
+        ```
+- Looks great! Ready to push this to `developer`. Change the agent role again and prompt `implement day12`
+- After a bit back and forths we are ready for `*epic-retrospective` to finish our story. Here is a start of that 
+    - Prompt: `*epic-retrospective`
+    - 
+        ```markdown
+        Bob (Scrum Master): "I'm havin' trouble detectin' the completed epic from sprint-status.yaml - seems we be sailin' without that particular chart, Rino. Based on me readin' o' the ship's log (yer README), it looks like ye just completed Day 12 - Present Packin' Puzzle usin' the full BMAD crew. Would that be Epic 1 in our books, or do ye have a different epic number in mind fer this retrospective?"
+
+        Alice (Product Owner): "Aye, and I be seein' that ye had quite the journey with 5 different implementation attempts before strikin' gold with that attempt-limited backtracking solution!"
+        ```
+- [Read full retrospective of the day](/aocBMADdocs/sprint-artifacts/epic-1-retro-2025-12-12.md)
+- Below is summary that BMAD wanted to add. I'll write my own summary of the journey next week I think.
+
+```markdown
+Phase 1 Implementation Journey:
+
+The developer faced significant challenges implementing the architect's plan:
+
+1. **Initial Approach** - Pure backtracking with constraint propagation
+   - Result: Too slow for real input scale (1000 regions, up to 386 presents)
+   - Issue: Infinite loops on complex regions
+
+2. **Exact-Fit Strategy** - Rejected placements if any empty space
+   - Result: 0/3 examples failed
+   - Issue: Misunderstood puzzle - dots (.) don't block placement, only # cells matter
+
+3. **Pure Greedy** - No backtracking at all
+   - Result: 1/3 examples (insufficient)
+   - Issue: Greedy alone can't solve constraint satisfaction
+
+4. **Depth-Limited Backtracking** - Maximum recursion depth of 50
+   - Result: Hung on example region 3
+   - Issue: Too restrictive - artificially limited valid solutions
+
+5. **Final Solution** - Attempt-limited backtracking (100,000 attempts per region)
+   - Result: ✅ 2/3 examples (correct), 519/1000 real input
+   - Performance: 781ms total execution time
+   - Key insight: Limit attempts rather than depth prevents infinite loops while allowing deep recursion when needed
+
+Results:
+
+| Metric | Value |
+| ------ | ----- |
+| Example Test | 2/3 regions solvable (correct) |
+| Real Input | 519/1000 regions solvable |
+| Execution Time | 781ms |
+| Algorithm | Attempt-limited backtracking |
+
+Verdict: 
+
+The **BMAD framework** successfully demonstrated enterprise AI development workflow:
+- **Architect** identified NP-Complete problem and designed algorithm strategy
+- **UX Designer** created beautiful Christmas-themed CLI with emojis, box-drawing, timing stats
+- **Developer** required 5 iterations to find optimal balance between correctness and performance
+
+Key learnings:
+- 🎯 BMAD's role separation forces better upfront planning (feasibility checks saved time)
+- 🎄 UX design for CLI apps is actually valuable (timing transparency, visual feedback)
+- ⚠️ Heavy framework overhead (~300 files) may be overkill for small projects
+- 📊 Algorithm iterations teach more than instant solutions
+- ✓ Specification quality matters - catching scale issues early prevented wasted work
+```

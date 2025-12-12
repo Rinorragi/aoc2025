@@ -1,0 +1,49 @@
+{
+  "workflow_version": "1.2.0",
+  "timestamps": {
+    "started": "2025-12-12T09:00:00Z",
+    "last_updated": "2025-12-12T09:05:00Z"
+  },
+  "mode": "initial_scan",
+  "scan_level": "deep",
+  "project_root": "d:\\ohjelmointi\\aoc2025",
+  "output_folder": "d:\\ohjelmointi\\aoc2025\\aocBMADdocs",
+  "completed_steps": [
+    {
+      "step": "step_1",
+      "status": "completed",
+      "timestamp": "2025-12-12T09:05:00Z",
+      "summary": "Classified as monorepo with 3 parts: aocMCP (backend), main solutions (data), aocSPEC (data)"
+    },
+    {
+      "step": "step_2",
+      "status": "completed",
+      "timestamp": "2025-12-12T09:10:00Z",
+      "summary": "Found 15+ existing docs including READMEs, MCP server docs, OpenSpec specs, BMAD framework docs"
+    },
+    {
+      "step": "step_3_to_12",
+      "status": "completed",
+      "timestamp": "2025-12-12T09:30:00Z",
+      "summary": "Generated complete brownfield documentation: technology-stack.md, api-contracts-aocMCP.md, project-overview.md, architecture-main-solutions.md, index.md"
+    }
+  ],
+  "current_step": "completed",
+  "project_types": [
+    {"part_id": "aocMCP", "project_type_id": "backend", "display_name": "MCP Server"},
+    {"part_id": "main", "project_type_id": "data", "display_name": "AoC Solutions"},
+    {"part_id": "aocSPEC", "project_type_id": "data", "display_name": "Spec-Kit Experimentation"}
+  ],
+  "findings": {
+    "project_classification": "Monorepo, 3 parts, F# + PowerShell"
+  },
+  "outputs_generated": [
+    "project-scan-report.json",
+    "technology-stack.md",
+    "api-contracts-aocMCP.md",
+    "project-overview.md",
+    "architecture-main-solutions.md",
+    "index.md"
+  ],
+  "resume_instructions": "Documentation workflow complete. All core docs generated."
+}
