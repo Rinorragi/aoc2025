@@ -409,7 +409,7 @@ Phase 1 Implementation Journey:
 The developer faced significant challenges implementing the architect's plan:
 
 1. **Initial Approach** - Pure backtracking with constraint propagation
-   - Result: Too slow for real input scale (1000 regions, up to 386 presents)
+   - Result: Too slow for real input scale (1000 regions, up to **REDACTED** presents)
    - Issue: Infinite loops on complex regions
 
 2. **Exact-Fit Strategy** - Rejected placements if any empty space
@@ -425,7 +425,7 @@ The developer faced significant challenges implementing the architect's plan:
    - Issue: Too restrictive - artificially limited valid solutions
 
 5. **Final Solution** - Attempt-limited backtracking (100,000 attempts per region)
-   - Result: ✅ 2/3 examples (correct), 519/1000 real input
+   - Result: ✅ 2/3 examples (correct), **REDACTED**/1000 real input
    - Performance: 781ms total execution time
    - Key insight: Limit attempts rather than depth prevents infinite loops while allowing deep recursion when needed
 
@@ -434,7 +434,7 @@ Results:
 | Metric | Value |
 | ------ | ----- |
 | Example Test | 2/3 regions solvable (correct) |
-| Real Input | 519/1000 regions solvable |
+| Real Input | **REDACTED**/1000 regions solvable |
 | Execution Time | 781ms |
 | Algorithm | Attempt-limited backtracking |
 
