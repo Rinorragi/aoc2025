@@ -2,7 +2,21 @@
 
 Repository to my puzzle solutions for [https://adventofcode.com/2025](https://adventofcode.com/2025).
 
-Might be that this year I also test some AI stuff. 
+Since global leaderboard was off I focused on learning how to work with AI agents on solving puzzles. 
+
+**Key learnings:**
+- Timewise I think I used similar amount time or more daily in comparison to writing code myself.  Mainly because setting up the agent workflow tooks some time. 
+- I compared both language models and different spec-driven development approaches and noticed that DIY workflow is lots of more work than I anticipated. 
+- Agent guardrails and right management is a mess in its current state.
+- Writing your own helper libraries for e.g. filemanipulation helps in auto-approving only specific things and manually approve the rest. For example that is what I did with `memory-manager.ps1` script. 
+- Agents try to please you and in doing that they are often forgotting some part of instructions especially if they think for example functional programming and performance optimization are in contradiction with each other. 
+
+**Different solving modules compared:**
+- Solving with `chat` was the most familiar for me. It worked pretty well. It just becomes burdensome to provide always context for the agent. Which of course can be solved with `copilot-instructions.md`. Filling that should be your first priority in a brownfield / greenfield project.
+- Building `agent orchestration` felt easy and fun but I never quite got it working as I wanted. Solving puzzles is bit back and forth and the more you do that the more the agent tries to please you and less it remembers its instructions. 
+- Using `Spec-Kit` for spec-driven-development was pretty straightforward. I tested on installing it into subdirectory which ended up creating a wanky workspace where actual code was in parent folder that was not seen in the workspace and the agents were at the subfolder. It worked suprisingly well when asking to create the code to one folder above and work with specs in the subfolder. I really really liked their readymade agents and scripts. They made bunch of things straightforward and easy. 
+- Using `Openspec` for spec-driven-developmant was a lightweight approach. It was designed for a brownfield and it fits well into a workspace where all three above already had happened. It did not hook into my existing workflows and its recommendation as well as I had hoped and it felt even too lightweight. Something cool for demos but also felt like something that could come in short when trying use it day-to-day job. Just my opinion from few hours experiments though. It provided a framework for specs but not so much on the agent workflow. Agent workflow would be something to build yourself but my existing agent workflow got hijacked by the openspec specifications. Now if I were to build an agent workflow for Openspec I am not exactly sure from where to start. 
+- Using `BMAD` for spec-driven-development was shoot with big cannons approach. It generated a ton of stuff that I did not even read (~300 files). But it did a fine job in hooking into my project and providing tools that I could think of using in a project. It provided a setup that had roles that were familiar to me and it were meant for agile project. I would want to test this out in a real project to get more details about that. Although I have some fears about tool hijacking the process instead of serving the project. People becoming slaves for the tool. All instructions are of course in the git repository so it is possible to manipulate them but is there for example update path? I don't know. 
 
 ## Setup
 
@@ -24,6 +38,10 @@ or to run all simply
 ```powershell
 ls -filter *.fsx | % { dotnet fsi $_ }
 ```
+
+# Days
+
+Summary of what I did each day and how the solution evolved. 
 
 ## Day 1
 
